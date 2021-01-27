@@ -7,10 +7,10 @@ export default () => {
   return (
     <ProCard split="vertical" className="body-card">
       <ProCard colSpan="400px">
-        <Sidebar type="readme" />
+        <Sidebar type="database" />
       </ProCard>
       <ProCard style={{ padding: '40px' }}>
-        <Markdown type="readme" />
+        <Markdown type="database" />
       </ProCard>
     </ProCard>
   );

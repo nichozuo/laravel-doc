@@ -6,7 +6,7 @@ import React from 'react';
 export default () => {
   return (
     <ProCard split="vertical" className="body-card">
-      <ProCard colSpan="400px">
+      <ProCard colSpan="300px">
         <Sidebar type="readme" />
       </ProCard>
       <ProCard style={{ padding: '40px' }}>

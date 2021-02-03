@@ -6,10 +6,10 @@ import React from 'react';
 export default () => {
   return (
     <ProCard split="vertical" className="body-card">
-      <ProCard colSpan="400px">
+      <ProCard colSpan="400px" className="menu-cont">
         <Sidebar type="modules" />
       </ProCard>
-      <ProCard style={{ padding: '40px' }}>
+      <ProCard className="my-content">
         <Markdown type="modules" />
       </ProCard>
     </ProCard>

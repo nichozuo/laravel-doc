@@ -1,4 +1,4 @@
 export const API = {
-  getMenu: 'home/get_menu',
-  getContent: 'home/get_content',
+  getMenu: 'docs/get_menu',
+  getContent: 'docs/get_content',
 };

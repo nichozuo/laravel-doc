@@ -36,11 +36,11 @@
       line-height: 130%;
     }
     p:nth-child(1) {
-      font-size: 18px;
+      font-size: 15px;
       margin: 10px 0 0 0;
     }
     p:nth-child(2) {
-      font-size: 11px;
+      font-size: 12px;
       margin: 0 0 5px 0;
       color: rgba(0, 0, 0, 0.5);
     }
@@ -54,7 +54,7 @@
     }
     p:nth-child(2) {
       margin-left: 6px;
-      font-size: 11px;
+      font-size: 12px;
       color: rgba(0, 0, 0, 0.5);
     }
   }
@@ -82,6 +82,15 @@
 
 //菜单
 .menus{
-  position:fixed;left:0;top:0;bottom:0;
+  position:fixed;left:0;top:0;bottom:0;height:96px;
 }
 .headMenu{width:100%;display:block;}
+.ant-tree-treenode{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+.tree-title-multi-inline{
+  display:flex;align-items: center;line-height:96px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;
+}

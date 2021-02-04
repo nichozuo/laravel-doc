@@ -1,56 +1,9 @@
-// import React, { useState } from 'react';
-// import { Tree } from 'antd';
-
 import request from '@/plugins/request';
 import { API } from '@/services/apis';
 import { Tree } from 'antd';
 import { useEffect, useState } from 'react';
 const { DirectoryTree } = Tree;
 import { history } from 'umi';
-
-// const treeData = [
-//   {
-//     title: '0-0',
-//     key: '0-0',
-//     children: [
-//       {
-//         title: '0-0-0',
-//         key: '0-0-0',
-//         children: [
-//           { title: '0-0-0-0', key: '0-0-0-0' },
-//           { title: '0-0-0-1', key: '0-0-0-1' },
-//           { title: '0-0-0-2', key: '0-0-0-2' },
-//         ],
-//       },
-//       {
-//         title: '0-0-1',
-//         key: '0-0-1',
-//         children: [
-//           { title: '0-0-1-0', key: '0-0-1-0' },
-//           { title: '0-0-1-1', key: '0-0-1-1' },
-//           { title: '0-0-1-2', key: '0-0-1-2' },
-//         ],
-//       },
-//       {
-//         title: '0-0-2',
-//         key: '0-0-2',
-//       },
-//     ],
-//   },
-//   {
-//     title: '0-1',
-//     key: '0-1',
-//     children: [
-//       { title: '0-1-0-0', key: '0-1-0-0' },
-//       { title: '0-1-0-1', key: '0-1-0-1' },
-//       { title: '0-1-0-2', key: '0-1-0-2' },
-//     ],
-//   },
-//   {
-//     title: '0-2',
-//     key: '0-2',
-//   },
-// ];
 
 const Title = ({ title, subTitle, multi }: any) => {
   const cls = subTitle
@@ -72,12 +25,12 @@ export default function Sidebar(props: any) {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(false);
+  const [selectedDefaultKeys,setSelectedDefaultKeys] = useState<React.Key[]>([]);
+  let defaultKeys = []
 
   const onExpand = (expandedKeys: React.Key[]) => {
     console.log('onExpand', expandedKeys);
-    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-    // or, you can remove all expanded children keys.
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(true);
   };
@@ -107,6 +60,20 @@ const setDefault = (key: string) => {
     }
     return key;
   };
+  const getLeafArr = (data: any[]) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].children) {
+        defaultKeys.push(data[i].key)
+        getLeafArr(data[i].children)
+        break;
+      } else {
+        defaultKeys.push(data[i].key);
+        break;
+      }
+    }
+    // setExpandedKeys(defaultKeys)
+    console.log(defaultKeys,'s3')
+  };
 
   const onCheck = (checkedKeys: React.Key[]) => {
     console.log('onCheck', checkedKeys);
@@ -122,6 +89,7 @@ const setDefault = (key: string) => {
       setTreeData(res.data);
       if (!history.location.query?.selected) {
         const key = getLeaf(res.data);
+        // getLeafArr(res.data)
         setDefault(key)
         onExpand([key]);
       } else {
@@ -133,23 +101,24 @@ const setDefault = (key: string) => {
   }, []);
 
   return (
-    <DirectoryTree
-      onExpand={onExpand}
-      expandedKeys={expandedKeys}
-      autoExpandParent={autoExpandParent}
-      onCheck={onCheck}
-      checkedKeys={checkedKeys}
-      onSelect={onSelect}
-      treeData={treeData}
-      className="sidebar"
-      titleRender={(nodeData) => (
-        <Title
-          title={nodeData.title}
-          subTitle={nodeData.subTitle}
-          multi={nodeData?.children}
-        />
-      )}
-      selectedKeys={selectedKeys}
-    />
+    <div>{autoExpandParent?
+      <DirectoryTree
+        onExpand={onExpand}
+        defaultExpandedKeys={expandedKeys}
+        onCheck={onCheck}
+        checkedKeys={checkedKeys}
+        onSelect={onSelect}
+        treeData={treeData}
+        className="sidebar"
+        titleRender={(nodeData) => (
+          <Title
+            title={nodeData.title}
+            subTitle={nodeData.subTitle}
+            multi={nodeData?.children}
+          />
+        )}
+        selectedKeys={selectedKeys}
+      />
+    :''}</div>
   );
 };
